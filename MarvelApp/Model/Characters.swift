@@ -1,13 +1,13 @@
 //
-//  Data.swift
+//  Characters.swift
 //  MarvelApp
 //
-//  Created by оля on 25.02.2021.
+//  Created by оля on 26.02.2021.
 //
 
 import Foundation
 
-struct Data: Codable{
+struct Characters: Codable{
     
     struct Results: Codable{
         var results: [Character]
