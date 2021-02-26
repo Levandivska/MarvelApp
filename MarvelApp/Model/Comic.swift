@@ -8,9 +8,14 @@
 import Foundation
 
 struct Comic: Codable{
+    
+    struct Image: Codable{
+        var path: String
+    }
+    
     var title: String
     var description: String
-    var image: String
+    var image: Image
     
     enum CodingKeys: String, CodingKey{
         case title
