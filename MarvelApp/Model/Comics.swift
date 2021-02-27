@@ -8,8 +8,10 @@
 import Foundation
 
 struct Comics: Codable {
+    
     struct Results: Codable {
         var results : [Comic]
     }
+    
     var data: Results
 }

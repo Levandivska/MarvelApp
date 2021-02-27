@@ -25,9 +25,9 @@ class Networker {
         
         AF.request(mainURL + "characters", parameters: parameters)
             .validate()
-            .responseDecodable(of: Characters.self){ responce in
+            .responseDecodable(of: Characters.self){ response in
                 DispatchQueue.main.async {
-                    completion(responce.value?.data.results)
+                    completion(response.value?.data.results)
                 }
             }
     }
@@ -36,9 +36,26 @@ class Networker {
         guard let parameters = parameters else { return }
         AF.request(mainURL + "characters/" + String(characterId) + "/comics", parameters: parameters)
             .validate()
-            .responseDecodable(of: Comics.self){ responce in
+            .responseDecodable(of: Comics.self){ response in
                 DispatchQueue.main.async{
-                    completion(responce.value?.data.results)
+                    completion(response.value?.data.results)
+                }
+                
+        }
+    }
+    
+    func fetchData(url: String, completion: @escaping (Data?) -> (Void) ) {
+        AF.request(url+"/portrait_xlarge.jpg" , parameters: parameters)
+            .validate()
+            .responseData{ response in
+
+                DispatchQueue.main.async{
+                    completion(response.value)
+                }
+                
+                switch response.result{
+                case .success: print("succes")
+                case let .failure(error): print("error \(error)")
                 }
                 
             }

@@ -8,8 +8,10 @@
 import Foundation
 
 struct Character: Codable{
+    
     struct Image: Codable{
         var path: String
+        var data: Data? = nil
     }
     
     var id: Int
@@ -21,4 +23,5 @@ struct Character: Codable{
         case name
         case id
     }
+    
 }

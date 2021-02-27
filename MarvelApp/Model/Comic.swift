@@ -11,6 +11,8 @@ struct Comic: Codable{
     
     struct Image: Codable{
         var path: String
+        var data: Data? = nil
+
     }
     
     var title: String
