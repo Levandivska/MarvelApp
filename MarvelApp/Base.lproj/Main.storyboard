@@ -11,7 +11,7 @@
         <!--Item 2-->
         <scene sceneID="o67-ZR-2DZ">
             <objects>
-                <viewController id="GvI-l4-nzx" sceneMemberID="viewController">
+                <viewController id="GvI-l4-nzx" customClass="FavoritesViewController" customModule="MarvelApp" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="H0J-Yw-cm1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="320" id="cvv-fp-ftV">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoriteCell" rowHeight="320" id="cvv-fp-ftV" customClass="FavoriteCell" customModule="MarvelApp">
                                         <rect key="frame" x="0.0" y="28" width="414" height="320"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cvv-fp-ftV" id="aee-RH-Uhb">
@@ -59,8 +59,18 @@
                                                 <constraint firstItem="03y-9y-lJQ" firstAttribute="centerX" secondItem="aee-RH-Uhb" secondAttribute="centerX" id="qps-Xm-PBs"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="descriptionLabel" destination="03y-9y-lJQ" id="tFp-bl-efP"/>
+                                            <outlet property="image" destination="GyT-3w-S3K" id="2cP-7z-Ij0"/>
+                                            <outlet property="mainImage" destination="GyT-3w-S3K" id="xNB-AN-XQG"/>
+                                            <outlet property="titleLabel" destination="ZQt-zT-vgH" id="9ys-oS-Sgc"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="GvI-l4-nzx" id="3EF-oX-CN6"/>
+                                    <outlet property="delegate" destination="GvI-l4-nzx" id="fzb-vv-5el"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SPf-D6-PSm"/>
@@ -73,6 +83,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="mI8-fe-Wmi"/>
+                    <connections>
+                        <outlet property="tableView" destination="MF3-DO-hIU" id="Hic-cI-PHg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rjg-GE-g9u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
