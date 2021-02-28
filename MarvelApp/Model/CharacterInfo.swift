@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import CoreData
 
-struct Character: Codable{
+class CharacterInfo: Codable {
     
     struct Image: Codable{
         var path: String
@@ -23,5 +24,5 @@ struct Character: Codable{
         case name
         case id
     }
-    
 }
+

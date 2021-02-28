@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Characters: Codable{
+struct CharactersInfo: Codable{
     
     struct Results: Codable{
-        var results: [Character]
+        var results: [CharacterInfo]
     }
     
     var data: Results

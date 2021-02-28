@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Comic: Codable{
+struct ComicInfo: Codable{
     
     struct Image: Codable{
         var path: String
