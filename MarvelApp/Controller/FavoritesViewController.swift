@@ -7,17 +7,18 @@
 
 import UIKit
 import Foundation
+import CoreData
 
 class FavoritesViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+
     var network = Networker()
     
-    var favoritesComics: [Comic] = []
-    var characters: [Character] = []
+    var favoritesComics: [ComicInfo] = []
+    var characters: [CharacterInfo] = []
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

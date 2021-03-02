@@ -20,23 +20,23 @@ class Networker {
         self.parameters = ["apikey" : self.apiKey, "ts": self.ts, "hash" : self.hash]
     }
     
-    func fetchCharacters(completion: @escaping ([Character]?) -> (Void)){
+    func fetchCharacters(completion: @escaping ([CharacterInfo]?) -> (Void)){
         guard let parameters = parameters else { return }
         
         AF.request(mainURL + "characters", parameters: parameters)
             .validate()
-            .responseDecodable(of: Characters.self){ response in
+            .responseDecodable(of: CharactersInfo.self){ response in
                 DispatchQueue.main.async {
                     completion(response.value?.data.results)
                 }
             }
     }
     
-    func fetchComics(characterId: Int, completion : @escaping ([Comic]?) -> (Void)) {
+    func fetchComics(characterId: Int, completion : @escaping ([ComicInfo]?) -> (Void)) {
         guard let parameters = parameters else { return }
         AF.request(mainURL + "characters/" + String(characterId) + "/comics", parameters: parameters)
             .validate()
-            .responseDecodable(of: Comics.self){ response in
+            .responseDecodable(of: ComicsInfo.self){ response in
                 DispatchQueue.main.async{
                     completion(response.value?.data.results)
                 }
