@@ -24,6 +24,9 @@
 		0FCCF1F225EC0BFF00D68E50 /* UserSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF1F125EC0BFF00D68E50 /* UserSettingsViewController.swift */; };
 		0FCCF1F525EC185400D68E50 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF1F425EC185400D68E50 /* SettingsSection.swift */; };
 		0FCCF1FD25ED69C600D68E50 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF1FC25ED69C600D68E50 /* SettingCell.swift */; };
+		0FCCF20325EFDFA700D68E50 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF20225EFDFA600D68E50 /* Character.swift */; };
+		0FCCF20625EFDFF100D68E50 /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF20525EFDFF100D68E50 /* Comic.swift */; };
+		0FCCF20F25EFE70A00D68E50 /* DataHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF20E25EFE70A00D68E50 /* DataHomeViewController.swift */; };
 		F2520241528A0E4DF34FFE26 /* Pods_MarvelApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D70AE74767FBF4B2093D912 /* Pods_MarvelApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +51,9 @@
 		0FCCF1F125EC0BFF00D68E50 /* UserSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsViewController.swift; sourceTree = "<group>"; };
 		0FCCF1F425EC185400D68E50 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
 		0FCCF1FC25ED69C600D68E50 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		0FCCF20225EFDFA600D68E50 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		0FCCF20525EFDFF100D68E50 /* Comic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comic.swift; sourceTree = "<group>"; };
+		0FCCF20E25EFE70A00D68E50 /* DataHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHomeViewController.swift; sourceTree = "<group>"; };
 		6CA8E37EF3FCFE1923B5B00F /* Pods-MarvelApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MarvelApp.debug.xcconfig"; path = "Target Support Files/Pods-MarvelApp/Pods-MarvelApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7D70AE74767FBF4B2093D912 /* Pods_MarvelApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MarvelApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -113,8 +119,10 @@
 			children = (
 				0FCCF19125E57E4100D68E50 /* Networker.swift */,
 				0FCCF1F425EC185400D68E50 /* SettingsSection.swift */,
+				0FCCF20225EFDFA600D68E50 /* Character.swift */,
 				0FCCF1A425E7B75700D68E50 /* CharacterInfo.swift */,
 				0FCCF1D325E9870B00D68E50 /* CharactersInfo.swift */,
+				0FCCF20525EFDFF100D68E50 /* Comic.swift */,
 				0FCCF19B25E6CB2D00D68E50 /* ComicsInfo.swift */,
 				0FCCF19E25E6CD1400D68E50 /* ComicInfo.swift */,
 			);
@@ -134,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				0FCCF17C25E56F6000D68E50 /* HomeViewController.swift */,
+				0FCCF20E25EFE70A00D68E50 /* DataHomeViewController.swift */,
 				0FCCF1DB25EA5A9300D68E50 /* FavoritesViewController.swift */,
 				0FCCF1F125EC0BFF00D68E50 /* UserSettingsViewController.swift */,
 			);
@@ -263,6 +272,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FCCF1A525E7B75700D68E50 /* CharacterInfo.swift in Sources */,
+				0FCCF20F25EFE70A00D68E50 /* DataHomeViewController.swift in Sources */,
+				0FCCF20625EFDFF100D68E50 /* Comic.swift in Sources */,
 				0FCCF1F525EC185400D68E50 /* SettingsSection.swift in Sources */,
 				0FCCF19C25E6CB2D00D68E50 /* ComicsInfo.swift in Sources */,
 				0FCCF19F25E6CD1400D68E50 /* ComicInfo.swift in Sources */,
@@ -274,6 +285,7 @@
 				0FCCF17925E56F6000D68E50 /* AppDelegate.swift in Sources */,
 				0FCCF18325E56F6000D68E50 /* MarvelApp.xcdatamodeld in Sources */,
 				0FCCF17B25E56F6000D68E50 /* SceneDelegate.swift in Sources */,
+				0FCCF20325EFDFA700D68E50 /* Character.swift in Sources */,
 				0FCCF1DC25EA5A9300D68E50 /* FavoritesViewController.swift in Sources */,
 				0FCCF1D425E9870B00D68E50 /* CharactersInfo.swift in Sources */,
 			);
