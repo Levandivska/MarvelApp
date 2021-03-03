@@ -10,50 +10,75 @@ import CoreData
 
 class HomeViewController: UIViewController {
 
+    var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
+
     var network = Networker()
     
-    var characters: [NSManagedObject] = []
-    var comics: [NSManagedObject] = []
-    
-    var comicsInfo: [ComicInfo]? = nil
-    var charactersInfo: [CharacterInfo] = []
-    
-    var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
+    var characters: [Character] = []
+    var comics: [Comic] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+         
+        // fetch Character list from network
         network.fetchCharacters { [weak self] (charactersInfo) -> (Void) in
             guard let charactersInfo = charactersInfo else { return }
             self?.charactersInfo = charactersInfo
-            self?.fetchCharactersIntoDataBase()
+            self?.updateDatabase(with: charactersInfo)
         }
-//            characters.forEach{ [weak self] character in
-//                self?.network.fetchComics(characterId: character.id){ (comics) -> (Void) in
-//                    print("In Main View Controller: ", comics)
-//                }
-//            }
-     //   }
+        
+            //  for each character fetch comics
+            charactersInfo.forEach{ [weak self] character in
+                self?.network.fetchComics(characterId: character.id){ (comics) -> (Void) in
+                    if let comics = comics {
+                        self?.updateDatabase(with: comics)
+                    }
+                }
+            }
+    }
+    
+    // fetch events
+    // insert events
+    
+    // fetch stories
+    // insert stories
+    
+    // fetch series
+    // fetch events
+}
 
+
+// core Data functions extension
+extension HomeViewController {
+    private func fetchComicsFromDatabase(){
+        container?.performBackgroundTask {[weak self] context in
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Comic")
+            do {
+                if let comics = try context.fetch(fetchRequest) as? [Comic]{
+                    self?.comics = comics
+                }
+            }
+            catch {
+                fatalError("Failed to fetch Characters")
+            }
+        }
+    }
+    
+    private func updateDatabase(with comicsInfo: [ComicInfo]){
+        container?.performBackgroundTask{ context in
+            for comicInfo in comicsInfo {
+                _ = Comic.create(comicInfo: comicInfo, in: context)
+            }
+            try? context.save()
+        }
     }
 
-    
-    func fetchCharactersIntoDataBase(){
-        
-        guard let context = AppDelegate.context else { return }
-        guard let entity = NSEntityDescription.entity(forEntityName: "Character", in: context) else { return }
-        
-        charactersInfo.forEach {
-            let character = NSManagedObject(entity: entity,
-                                         insertInto: context)
-            character.setValue($0.name, forKey: "name")
-        }
-        
-        do{
-            try context.save()
-        } catch let error as NSError {
-          print("Could not save. \(error), \(error.userInfo)")
+    private func updateDatabase(with charactersInfo: [CharacterInfo]){
+        container?.performBackgroundTask{ context in
+            for characterInfo in charactersInfo {
+                _ = Character.create(characterInfo: characterInfo, in: context)
+            }
+            try? context.save()
         }
     }
 }
-

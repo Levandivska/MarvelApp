@@ -7,7 +7,6 @@
 
 import UIKit
 import Foundation
-import CoreData
 
 class FavoritesViewController: UIViewController {
 
@@ -34,7 +33,6 @@ class FavoritesViewController: UIViewController {
             characters.forEach { [weak self] character in
                 self?.network.fetchComics(characterId: character.id){ (comics) -> (Void) in
                     self?.favoritesComics += comics ?? []
-                    print(self?.favoritesComics ?? "none")
                     self?.tableView.reloadData()
                 }
             }
@@ -58,10 +56,14 @@ extension FavoritesViewController: UITableViewDataSource{
         cell.titleLabel.text = comic.title
         cell.descriptionLabel.text = comic.description
         
+        
         if comic.image.data == nil {
+            // fetch image data from internete
             DispatchQueue.global().async { [weak self] in
                 self?.network.fetchData(url: comic.image.path) { (imgData) -> (Void) in
                     if let imgData = imgData {
+                        
+                        // add to comic image data property
                         comic.image.data = imgData
                         self?.favoritesComics[indexPath.row] = comic
                     }

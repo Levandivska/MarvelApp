@@ -12,22 +12,25 @@ class UserSettingsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
         
+    var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     var characters: [NSManagedObject] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         DispatchQueue.main.async { [weak self] in
             if let characters = self?.fetchCharacters(){
                 self?.characters = characters
-                print("characters= ", characters)
                 self?.tableView.reloadData()
             }
         }
+
     }
     
     func fetchCharacters() -> [NSManagedObject]?{
-        guard let context = AppDelegate.context else { return nil }
+        guard let context = container?.viewContext else { return nil }
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Character")
         
         do {

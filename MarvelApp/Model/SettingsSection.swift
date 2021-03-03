@@ -13,13 +13,13 @@ protocol SectionType: CustomStringConvertible{
 }
 
 enum SettingsSection: Int, CaseIterable, CustomStringConvertible{
-    case characters
     case sections
+    case characters
         
     var description: String {
         switch self{
-        case .characters : return "Characters"
         case .sections : return "Sections"
+        case .characters : return "Characters"
         }
     }
 }

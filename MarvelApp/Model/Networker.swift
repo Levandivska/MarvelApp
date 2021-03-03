@@ -53,11 +53,6 @@ class Networker {
                     completion(response.value)
                 }
                 
-                switch response.result{
-                case .success: print("succes")
-                case let .failure(error): print("error \(error)")
-                }
-                
             }
     }
 }
