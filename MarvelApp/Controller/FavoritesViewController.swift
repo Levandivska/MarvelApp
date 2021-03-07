@@ -11,7 +11,6 @@ import Foundation
 class FavoritesViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    
 
     var network = Networker()
     
@@ -63,7 +62,7 @@ extension FavoritesViewController: UITableViewDataSource{
                 self?.network.fetchData(url: comic.image.path) { (imgData) -> (Void) in
                     if let imgData = imgData {
                         
-                        // add to comic image data property
+                        // set comic.image.data property
                         comic.image.data = imgData
                         self?.favoritesComics[indexPath.row] = comic
                     }

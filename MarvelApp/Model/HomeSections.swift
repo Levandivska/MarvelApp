@@ -10,10 +10,12 @@ import Foundation
 enum HomeSections: Int, CaseIterable, CustomStringConvertible{
 
     case comics
+    case events
     
     var description: String{
         switch self{
         case .comics: return "Comics"
+        case .events: return "Events"
         }
     }
 }
