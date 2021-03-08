@@ -14,12 +14,13 @@
     <entity name="Item" representedClassName=".Item" syncable="YES" codeGenerationType="category">
         <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="imagePath" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
     <elements>
         <element name="Character" positionX="-63" positionY="-18" width="128" height="103"/>
         <element name="Comic" positionX="148.0354614257812" positionY="-11.8240966796875" width="128" height="88"/>
-        <element name="Item" positionX="80.05841064453125" positionY="130.4126586914062" width="128" height="103"/>
+        <element name="Item" positionX="80.05841064453125" positionY="130.4126586914062" width="128" height="104"/>
     </elements>
 </model>
