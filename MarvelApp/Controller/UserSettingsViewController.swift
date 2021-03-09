@@ -26,7 +26,6 @@ class UserSettingsViewController: UIViewController {
                 self?.tableView.reloadData()
             }
         }
-
     }
     
     func fetchCharacters() -> [NSManagedObject]?{

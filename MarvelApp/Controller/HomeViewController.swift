@@ -9,24 +9,20 @@ import UIKit
 import CoreData
 
 class HomeViewController: UIViewController {
-    static let sectionHeaderElementKind = "section-header-element-kind"
 
     var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
 
-    private var fetchedComicsResultsController: NSFetchedResultsController<Comic>? = nil
+    private var fetchedResultsController: NSFetchedResultsController<Item>? = nil
         
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     var network = Networker()
-        
-    var characters: [Character] = []
-    var comics: [Comic] = []
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        creacteFetchedComicsResultsController()
+        creacteFetchedResultsController()
         collectionView.collectionViewLayout = generateLayout()
         
         // fetch Character list from network
@@ -35,11 +31,40 @@ class HomeViewController: UIViewController {
 //            self?.charactersInfo = charactersInfo
             self?.updateDatabase(with: charactersInfo)
 
-            //  for each character fetch comics
-            charactersInfo.forEach{ [weak self] character in
-                self?.network.fetchComics(characterId: character.id){ (comics) -> (Void) in
-                    if let comics = comics {
-                        self?.updateDatabase(with: comics)
+            //  for each character fetch items from network
+            for character in charactersInfo {
+
+                // fetch comics fromnetwork
+                let comicsSection = HomeSections.comics.description
+                self?.network.fetchItems(characterId: character.id, itemSection: comicsSection){ (items) -> (Void) in
+                    if let items = items {
+                        self?.updateDatabase(with: items, asType: comicsSection)
+                        self?.collectionView.reloadData()
+                    }
+                }
+                
+                // fetch stories from network
+                let storiesSection = HomeSections.stories.description
+                self?.network.fetchItems(characterId: character.id, itemSection: storiesSection){ (items) -> (Void) in
+                    if let items = items {
+                        self?.updateDatabase(with: items, asType: storiesSection)
+                        self?.collectionView.reloadData()
+                    }
+                }
+                
+                let eventsSection = HomeSections.stories.description
+                self?.network.fetchItems(characterId: character.id, itemSection: eventsSection){ (items) -> (Void) in
+                    if let items = items {
+                        self?.updateDatabase(with: items, asType: eventsSection)
+                        self?.collectionView.reloadData()
+                    }
+                }
+                
+                // fetch series from network
+                let seriesSection = HomeSections.series.description
+                self?.network.fetchItems(characterId: Int(character.id), itemSection: seriesSection){ (items) -> (Void) in
+                    if let items = items {
+                        self?.updateDatabase(with: items, asType: seriesSection)
                         self?.collectionView.reloadData()
                     }
                 }
@@ -47,19 +72,19 @@ class HomeViewController: UIViewController {
         }
     }
     
-    private func creacteFetchedComicsResultsController(){
+    private func creacteFetchedResultsController(){
         if let context = container?.viewContext {
-            let request = NSFetchRequest<Comic>(entityName: "Comic")
-            request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-            
-            self.fetchedComicsResultsController = NSFetchedResultsController<Comic>(
+            let request = NSFetchRequest<Item>(entityName: "Item")
+            request.sortDescriptors = [NSSortDescriptor(key: "type", ascending: true)]
+
+            self.fetchedResultsController = NSFetchedResultsController<Item>(
                    fetchRequest: request,
                    managedObjectContext: context,
-                   sectionNameKeyPath: nil,
+                    sectionNameKeyPath: "type",
                    cacheName: nil
                )
-            
-            try? fetchedComicsResultsController?.performFetch()
+
+            try? fetchedResultsController?.performFetch()
                    collectionView.reloadData()
         }
     }
@@ -67,7 +92,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let sections = fetchedComicsResultsController?.sections {
+        if let sections = fetchedResultsController?.sections {
             let sectionInfo = sections[section]
             return sectionInfo.numberOfObjects
         }
@@ -77,14 +102,33 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionCell.identifier,
                                                               for: indexPath) as! HomeCollectionCell
-        cell.img.image = UIImage(systemName: "person")
-        guard let object = fetchedComicsResultsController?.object(at: indexPath) else { return UICollectionViewCell() }
-        cell.titleLabel.text = object.title
+
+        guard let item = fetchedResultsController?.object(at: indexPath) else { return UICollectionViewCell() }
+        
+        // Here IS forse unwrap
+        if item.image == nil {
+            DispatchQueue.global().async { [weak self] in
+                self?.network.fetchData(url: item.imagePath!) { (imgData) -> (Void) in
+                    if let imgData = imgData{
+                        item.image = imgData
+                    }
+                }
+            }
+        }
+        
+        cell.titleLabel.text = item.type
+        
+        if let itemImage = item.image{
+            cell.img.image = UIImage(data: itemImage)
+        }
+        
         return cell
+        
     }
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if let sections = fetchedComicsResultsController?.sections {
+        if let sections = fetchedResultsController?.sections {
+            print("sections.count ", sections.count)
             return sections.count
         }
         return 0
@@ -93,26 +137,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
 
 // core Data functions extension
 extension HomeViewController{
-    private func fetchComicsFromDatabase(){
-        container?.performBackgroundTask {[weak self] context in
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Comic")
-            do {
-                if let comics = try context.fetch(fetchRequest) as? [Comic]{
-                    self?.comics = comics
-                }
-            }
-            catch {
-                fatalError("Failed to fetch Characters")
-            }
-        }
-    }
     
-    private func updateDatabase(with comicsInfo: [ComicInfo]){
-        container?.performBackgroundTask{ [weak self] context in
-            for comicInfo in comicsInfo {
-                let comic = Comic.create(comicInfo: comicInfo, in: context)
-//                print(comic.title!)
-                self?.comics.append(comic)
+    private func updateDatabase(with itemsInfo: [ItemInfo], asType itemType:String){
+        container?.performBackgroundTask{ context in
+            for itemInfo in itemsInfo {
+                try? _ = Item.findOrCreate(itemInfo: itemInfo, itemType:itemType, in: context)
             }
             try? context.save()
         }
@@ -121,7 +150,7 @@ extension HomeViewController{
     private func updateDatabase(with charactersInfo: [CharacterInfo]){
         container?.performBackgroundTask{ context in
             for characterInfo in charactersInfo {
-                _ = Character.create(characterInfo: characterInfo, in: context)
+                try? _ = Character.findOrCreate(characterInfo: characterInfo, in: context)
             }
             try? context.save()
         }
@@ -130,16 +159,13 @@ extension HomeViewController{
 
 // Compositional Layput extension
 extension HomeViewController {
-    func generateComicsLayout() -> NSCollectionLayoutSection{
+    func generateLayoutforSections() -> NSCollectionLayoutSection{
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalWidth(1.0)
         )
         
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-//        let groupFractionalWidth = isWide ? 0.475 : 0.95
-//        let groupFractionalHeight: Float = isWide ? 1/3 : 2/3
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(0.95),
@@ -157,17 +183,17 @@ extension HomeViewController {
           bottom: 5,
           trailing: 5)
 
-        let headerSize = NSCollectionLayoutSize(
-          widthDimension: .fractionalWidth(1.0),
-          heightDimension: .estimated(44))
-        
-        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-          layoutSize: headerSize,
-          elementKind: HomeViewController.sectionHeaderElementKind,
-          alignment: .top)
+//        let headerSize = NSCollectionLayoutSize(
+//          widthDimension: .fractionalWidth(1.0),
+//          heightDimension: .estimated(44))
+//
+//        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+//          layoutSize: headerSize,
+//          elementKind: HomeViewController.sectionHeaderElementKind,
+//          alignment: .top)
 
         let section = NSCollectionLayoutSection(group: group)
-        section.boundarySupplementaryItems = [sectionHeader]
+//        section.boundarySupplementaryItems = [sectionHeader]
         section.orthogonalScrollingBehavior = .continuous
 //        section.orthogonalScrollingBehavior = .groupPaging
         
@@ -176,17 +202,14 @@ extension HomeViewController {
     
     func generateLayout() -> UICollectionViewLayout {
         
+        // TODO Create General Layout
+        
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
           layoutEnvironment: NSCollectionLayoutEnvironment)
             -> NSCollectionLayoutSection? in
-
-          guard let sectionLayoutKind = HomeSections(rawValue: sectionIndex) else { fatalError("Not correct section index")}
-          switch sectionLayoutKind {
-          case .comics: return self.generateComicsLayout()
-          case .events: return self.generateComicsLayout()
-          }
+            
+            return self.generateLayoutforSections()
         }
-        
         return layout
     }
 }

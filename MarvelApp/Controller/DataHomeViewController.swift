@@ -16,6 +16,7 @@ class DataHomeViewController: HomeViewController {
             for comicInfo in comicsInfo {
                 _ = Comic.create(comicInfo: comicInfo, in: context)
             }
+            
             try? context.save()
         }
     }

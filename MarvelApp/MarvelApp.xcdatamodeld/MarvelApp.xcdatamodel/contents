@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Character" representedClassName=".Character" syncable="YES" codeGenerationType="category">
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="comics" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comic"/>
@@ -13,6 +13,7 @@
     </entity>
     <entity name="Item" representedClassName=".Item" syncable="YES" codeGenerationType="category">
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="imagePath" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
@@ -21,6 +22,6 @@
     <elements>
         <element name="Character" positionX="-63" positionY="-18" width="128" height="103"/>
         <element name="Comic" positionX="148.0354614257812" positionY="-11.8240966796875" width="128" height="88"/>
-        <element name="Item" positionX="80.05841064453125" positionY="130.4126586914062" width="128" height="104"/>
+        <element name="Item" positionX="80.05841064453125" positionY="130.4126586914062" width="128" height="133"/>
     </elements>
 </model>

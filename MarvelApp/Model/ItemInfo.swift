@@ -1,28 +1,27 @@
 //
-//  Comic.swift
+//  ItemInfo.swift
 //  MarvelApp
 //
-//  Created by оля on 24.02.2021.
+//  Created by оля on 08.03.2021.
 //
 
 import Foundation
 
-struct ComicInfo: Codable{
-    
+struct ItemInfo: Codable{
     struct Image: Codable{
         var path: String
         var data: Data? = nil
     }
     
-    var resourceURL: String
     var title: String
-    var description: String
+    var id: Int
+//    var description: String
     var image: Image
     
     enum CodingKeys: String, CodingKey{
         case title
-        case description
+        case id
+//        case description
         case image = "thumbnail"
-        case resourceURL
     }
 }

@@ -5,7 +5,7 @@
 //  Created by оля on 23.02.2021.
 //
 
-//import Foundation
+import Foundation
 import Alamofire
 
 class Networker {
@@ -16,6 +16,7 @@ class Networker {
     private let hash = "204f771d43008acf58db76f652f89db1"
     private var parameters : [String: String]? = nil
         
+    
     init(){
         self.parameters = ["apikey" : self.apiKey, "ts": self.ts, "hash" : self.hash]
     }
@@ -32,17 +33,43 @@ class Networker {
             }
     }
     
-    func fetchComics(characterId: Int, completion : @escaping ([ComicInfo]?) -> (Void)) {
-        guard let parameters = parameters else { return }
-        AF.request(mainURL + "characters/" + String(characterId) + "/comics", parameters: parameters)
+    
+    func fetchItems(characterId: Int, itemSection: String, completion: @escaping ([ItemInfo]?) -> (Void)){
+        guard let parameter = parameters else { return }
+        AF.request(mainURL + "characters/" + String(characterId) + "/\(itemSection)", parameters: parameter)
             .validate()
-            .responseDecodable(of: ComicsInfo.self){ response in
+            .responseDecodable(of: ItemsInfo.self){ response in
+                switch response.result{
+                case .success:
+                    print("seccues")
+//                    if itemSection == "stories"{
+//
+//                }
+                
+                case .failure(let error):
+                    print("error = ")
+//                    if itemSection == "stories"{
+//                        print("error = " ,error)
+//                    }
+
+                }
                 DispatchQueue.main.async{
                     completion(response.value?.data.results)
                 }
-                
-        }
+            }
+        
     }
+    
+//    func fetchComics(characterId: Int, completion : @escaping ([ComicInfo]?) -> (Void)) {
+//        guard let parameters = parameters else { return }
+//        AF.request(mainURL + "characters/" + String(characterId) + "/comics", parameters: parameters)
+//            .validate()
+//            .responseDecodable(of: ComicsInfo.self){ response in
+//                DispatchQueue.main.async{
+//                    completion(response.value?.data.results)
+//                }
+//        }
+//    }
     
     func fetchData(url: String, completion: @escaping (Data?) -> (Void) ) {
         AF.request(url+"/portrait_xlarge.jpg" , parameters: parameters)

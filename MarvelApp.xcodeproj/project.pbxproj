@@ -29,6 +29,9 @@
 		0FCCF20F25EFE70A00D68E50 /* DataHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF20E25EFE70A00D68E50 /* DataHomeViewController.swift */; };
 		0FCCF21225F12C3700D68E50 /* HomeSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF21125F12C3700D68E50 /* HomeSections.swift */; };
 		0FCCF21525F134F100D68E50 /* HomeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF21425F134F100D68E50 /* HomeCollectionCell.swift */; };
+		0FCCF22825F6573A00D68E50 /* ItemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF22725F6573A00D68E50 /* ItemInfo.swift */; };
+		0FCCF22B25F6574500D68E50 /* ItemsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF22A25F6574500D68E50 /* ItemsInfo.swift */; };
+		0FCCF23725F66E4600D68E50 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCCF23625F66E4600D68E50 /* Item.swift */; };
 		F2520241528A0E4DF34FFE26 /* Pods_MarvelApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D70AE74767FBF4B2093D912 /* Pods_MarvelApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +61,9 @@
 		0FCCF20E25EFE70A00D68E50 /* DataHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHomeViewController.swift; sourceTree = "<group>"; };
 		0FCCF21125F12C3700D68E50 /* HomeSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSections.swift; sourceTree = "<group>"; };
 		0FCCF21425F134F100D68E50 /* HomeCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionCell.swift; sourceTree = "<group>"; };
+		0FCCF22725F6573A00D68E50 /* ItemInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemInfo.swift; sourceTree = "<group>"; };
+		0FCCF22A25F6574500D68E50 /* ItemsInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsInfo.swift; sourceTree = "<group>"; };
+		0FCCF23625F66E4600D68E50 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		6CA8E37EF3FCFE1923B5B00F /* Pods-MarvelApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MarvelApp.debug.xcconfig"; path = "Target Support Files/Pods-MarvelApp/Pods-MarvelApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7D70AE74767FBF4B2093D912 /* Pods_MarvelApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MarvelApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -125,6 +131,9 @@
 				0FCCF1F425EC185400D68E50 /* SettingsSection.swift */,
 				0FCCF20225EFDFA600D68E50 /* Character.swift */,
 				0FCCF21125F12C3700D68E50 /* HomeSections.swift */,
+				0FCCF22725F6573A00D68E50 /* ItemInfo.swift */,
+				0FCCF23625F66E4600D68E50 /* Item.swift */,
+				0FCCF22A25F6574500D68E50 /* ItemsInfo.swift */,
 				0FCCF1A425E7B75700D68E50 /* CharacterInfo.swift */,
 				0FCCF1D325E9870B00D68E50 /* CharactersInfo.swift */,
 				0FCCF20525EFDFF100D68E50 /* Comic.swift */,
@@ -282,15 +291,18 @@
 				0FCCF20625EFDFF100D68E50 /* Comic.swift in Sources */,
 				0FCCF1F525EC185400D68E50 /* SettingsSection.swift in Sources */,
 				0FCCF21225F12C3700D68E50 /* HomeSections.swift in Sources */,
+				0FCCF23725F66E4600D68E50 /* Item.swift in Sources */,
 				0FCCF19C25E6CB2D00D68E50 /* ComicsInfo.swift in Sources */,
 				0FCCF21525F134F100D68E50 /* HomeCollectionCell.swift in Sources */,
 				0FCCF19F25E6CD1400D68E50 /* ComicInfo.swift in Sources */,
 				0FCCF1FD25ED69C600D68E50 /* SettingCell.swift in Sources */,
+				0FCCF22825F6573A00D68E50 /* ItemInfo.swift in Sources */,
 				0FCCF19225E57E4100D68E50 /* Networker.swift in Sources */,
 				0FCCF1F225EC0BFF00D68E50 /* UserSettingsViewController.swift in Sources */,
 				0FCCF17D25E56F6000D68E50 /* HomeViewController.swift in Sources */,
 				0FCCF1DF25EA5CF900D68E50 /* FavoriteCell.swift in Sources */,
 				0FCCF17925E56F6000D68E50 /* AppDelegate.swift in Sources */,
+				0FCCF22B25F6574500D68E50 /* ItemsInfo.swift in Sources */,
 				0FCCF18325E56F6000D68E50 /* MarvelApp.xcdatamodeld in Sources */,
 				0FCCF17B25E56F6000D68E50 /* SceneDelegate.swift in Sources */,
 				0FCCF20325EFDFA700D68E50 /* Character.swift in Sources */,
